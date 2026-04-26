@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :user_params, only: [ :create, :update ]
   # POST /users
   def create
     user = User.new(user_params)
@@ -6,6 +7,16 @@ class Api::V1::UsersController < ApplicationController
       render json: user, status: :created
     else
       render json: user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH/PUT /users/:id
+  def update
+    user = User.find(params[:id])
+    if user&.update(user_params)
+      render json: user, status: :ok
+    else
+      render json: user.errors, status: :forbidden
     end
   end
 
