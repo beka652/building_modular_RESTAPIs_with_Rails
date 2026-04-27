@@ -43,4 +43,9 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
    get api_v1_user_url(@user), as: :json
    assert_response :success
   end
+
+  test "should get all users" do
+    get api_v1_users_url, as: :json
+    assert_response :ok
+  end
 end
