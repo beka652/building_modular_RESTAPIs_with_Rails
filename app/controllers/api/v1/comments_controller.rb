@@ -1,5 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
-  # POST /comments
+  before_action :comment, only: [ :update, :show, :destroy ]
   def create
     comment = Comment.new(comment_params)
     if comment.save
@@ -14,13 +14,11 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def show
-    render json: Comment.find(params[:id])
+    render json: @comment
   end
 
-  # patch /comments/:id
   def update
-    comment = Comment.find(params[:id])
-    if comment.update(comment_params)
+    if @comment.update(comment_params)
       render json: comment, status: :ok
     else
       render json: comment.errors, status: :unprocessable_entity
@@ -28,12 +26,15 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy
+    @comment.destroy
     head :no_content
   end
 
   private def comment_params
     params.require(:comment).permit(:comment, :user_id, :post_id)
+  end
+
+  private def comment
+    @comment = Comment.find(params[:id])
   end
 end
