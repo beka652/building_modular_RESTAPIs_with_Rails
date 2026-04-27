@@ -2,6 +2,10 @@ class Api::V1::PostsController < ApplicationController
   def show
    render json: Post.find(params[:id])
   end
+
+  def index
+   render json: Post.all
+  end
   # POST /posts
   def create
     post = Post.new(post_params)

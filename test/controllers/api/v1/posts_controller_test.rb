@@ -50,4 +50,9 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @post.user_id, json_response[:user_id]
     assert_equal @post.title, json_response[:title]
   end
+
+  test "should get posts" do
+    get api_v1_posts_url, as: :json
+    assert_response :success
+  end
 end
