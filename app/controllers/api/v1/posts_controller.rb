@@ -1,8 +1,10 @@
 class Api::V1::PostsController < ApplicationController
+  before_action :post, only: [ :show, :destroy, :update ]
+  # GET /posts/:id
   def show
-   render json: Post.find(params[:id])
+   render json: @post
   end
-
+  # GET /posts
   def index
    render json: Post.all
   end
@@ -15,23 +17,25 @@ class Api::V1::PostsController < ApplicationController
       render json: post.errors, status: :forbidden
     end
   end
-
+  # PATCH (PUT) /posts
   def update
-    post = Post.find(params[:id])
-    if post.update(post_params)
+    if @post.update(post_params)
       render json: post, status: :ok
     else
       render json: post.errors, status: :unprocessable_entity
     end
   end
-
+  # DELETE /posts
   def destroy
-    user =  User.find(params[:id])
-    user.destroy
+    @post.destroy
     head :no_content
   end
-
+ # whitelisting params
  private def post_params
    params.require(:post).permit(:title, :content, :user_id)
+ end
+ # find a post using its id and set it to @post
+ private def post
+   @post = Post.find(params[:id])
  end
 end
