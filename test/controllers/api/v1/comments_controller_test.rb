@@ -59,4 +59,11 @@ class Api::V1::CommentsControllerTest < ActionDispatch::IntegrationTest
     get api_v1_comments_url, as: :json
     assert_response :success
   end
+
+  test "should delete comment" do
+    assert_difference("Comment.count", -1) do
+      delete api_v1_comment_url(@one_comment), as: :json
+    end
+    assert_response :no_content
+  end
 end
