@@ -40,4 +40,14 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test "should return a post" do
+    get api_v1_post_url(@post), as: :json
+    assert_response :success
+
+    json_response = JSON.parse(response.body, symbolize_names: true)
+    assert_equal @post.content, json_response[:content]
+    assert_equal @post.user_id, json_response[:user_id]
+    assert_equal @post.title, json_response[:title]
+  end
 end
