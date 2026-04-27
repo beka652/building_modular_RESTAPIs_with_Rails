@@ -55,4 +55,9 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
     get api_v1_posts_url, as: :json
     assert_response :success
   end
+
+  test "should destroy post" do
+    delete api_v1_post_url(@post), as: :json
+    assert_response :no_content
+  end
 end
