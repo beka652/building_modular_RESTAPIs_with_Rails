@@ -1,11 +1,9 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :user_params, only: [ :create, :update ]
-
+  before_action :user, only: [ :update, :show, :destroy ]
   # GET /users/:id
   def show
-    render json: User.find(params[:id])
+    render json: @user
   end
-
   # GET /users
   def index
     render json: User.all
@@ -19,24 +17,25 @@ class Api::V1::UsersController < ApplicationController
       render json: user.errors, status: :unprocessable_entity
     end
   end
-
   # PATCH/PUT /users/:id
   def update
-    user = User.find(params[:id])
-    if user&.update(user_params)
+    if @user&.update(user_params)
       render json: user, status: :ok
     else
       render json: user.errors, status: :forbidden
     end
   end
-
+  # DELETE /users/:id
   def destroy
-    user = User.find(params[:id])
-    user.destroy
+    @user.destroy
     head :no_content
   end
 
   private def user_params
     params.require(:user).permit(:name, :email, :password)
+  end
+
+  private def user
+    @user = User.find(params[:id])
   end
 end
