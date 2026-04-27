@@ -54,4 +54,9 @@ class Api::V1::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @one_comment.post_id, json_response[:post_id]
     assert_equal @one_comment.user_id, json_response[:user_id]
   end
+
+  test "should get comments" do
+    get api_v1_comments_url, as: :json
+    assert_response :success
+  end
 end
