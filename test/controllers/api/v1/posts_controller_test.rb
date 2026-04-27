@@ -4,6 +4,7 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
   # Post :title, :content, :user_id
   setup do
     @user = users(:one)
+    @post = posts(:one)
   end
 
   test "should create post" do
@@ -22,5 +23,21 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
       as: :json
     end
     assert_response :forbidden
+  end
+
+  test "should update post" do
+    patch api_v1_post_url(@post),
+    params: { post: { title: "test_new_title", content: "test new content", user_id: @user.id } },
+    as: :json
+
+    assert_response :success
+  end
+
+  test "should not update post" do
+    patch api_v1_post_url(@post),
+    params: { post: { title: "test_new_title", content: "test new content", user_id: "bad_id" } },
+    as: :json
+
+    assert_response :unprocessable_entity
   end
 end
