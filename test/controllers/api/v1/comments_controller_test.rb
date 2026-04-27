@@ -43,4 +43,15 @@ class Api::V1::CommentsControllerTest < ActionDispatch::IntegrationTest
     as: :json
     assert_response :unprocessable_entity
   end
+
+  test "should show comment" do
+    get api_v1_comment_url(@one_comment), as: :json
+    assert_response :success
+
+    json_response = JSON.parse(response.body, symbolize_names: true)
+
+    assert_equal @one_comment.comment, json_response[:comment]
+    assert_equal @one_comment.post_id, json_response[:post_id]
+    assert_equal @one_comment.user_id, json_response[:user_id]
+  end
 end

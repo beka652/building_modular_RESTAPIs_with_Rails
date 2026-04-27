@@ -9,6 +9,10 @@ class Api::V1::CommentsController < ApplicationController
     end
   end
 
+  def show
+    render json: Comment.find(params[:id])
+  end
+
   # patch /comments/:id
   def update
     comment = Comment.find(params[:id])
