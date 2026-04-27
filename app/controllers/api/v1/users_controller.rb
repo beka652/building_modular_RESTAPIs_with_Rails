@@ -1,5 +1,10 @@
 class Api::V1::UsersController < ApplicationController
   before_action :user_params, only: [ :create, :update ]
+
+  # GET /users/:id
+  def show
+    render json: User.find(params[:id])
+  end
   # POST /users
   def create
     user = User.new(user_params)

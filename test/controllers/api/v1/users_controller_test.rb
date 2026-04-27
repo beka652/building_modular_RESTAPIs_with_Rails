@@ -37,4 +37,10 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :forbidden
   end
+
+  # get /users/:id
+  test "should get user" do
+   get api_v1_user_url(@user), as: :json
+   assert_response :success
+  end
 end
