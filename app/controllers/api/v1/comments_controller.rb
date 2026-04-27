@@ -9,7 +9,17 @@ class Api::V1::CommentsController < ApplicationController
     end
   end
 
-  def comment_params
+  # patch /comments/:id
+  def update
+    comment = Comment.find(params[:id])
+    if comment.update(comment_params)
+      render json: comment, status: :ok
+    else
+      render json: comment.errors, status: :unprocessable_entity
+    end
+  end
+
+  private def comment_params
     params.require(:comment).permit(:comment, :user_id, :post_id)
   end
 end

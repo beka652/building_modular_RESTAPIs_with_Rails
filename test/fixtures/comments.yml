@@ -3,3 +3,8 @@ one:
   post: one
   user: one
   comment: "What a great movie"
+
+two:
+  post: two
+  user: two
+  comment: "What a great movie"

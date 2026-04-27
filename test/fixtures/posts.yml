@@ -3,3 +3,8 @@ one:
   title: skyfall
   content: "One of the best bond movies"
   user: one
+
+two:
+  title: Casino_Royale
+  content: "One of the best bond movies"
+  user: two

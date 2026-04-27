@@ -3,3 +3,8 @@ one:
   name: first last
   email: first@gmail.com
   password: e1234
+
+two:
+  name: second last
+  email: second@gmail.com
+  password: e1234
