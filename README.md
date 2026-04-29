@@ -1,24 +1,99 @@
-# README
+# Building Modular REST APIs with Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails API project that implements a versioned JSON REST API for core blogging resources: users, posts, and comments.
 
-Things you may want to cover:
+## Project Status
 
-* Ruby version
+Current implementation includes:
 
-* System dependencies
+- API versioning with `api/v1` namespace
+- Full CRUD endpoints for `users`, `posts`, and `comments`
+- JSON responses for all API actions
+- Active Record associations with dependent cleanup
+- Model-level validations for required fields and constraints
+- Basic model tests for primary validation scenarios
 
-* Configuration
+## Tech Stack
 
-* Database creation
+- Ruby on Rails `8.1.3`
+- SQLite (development and test)
+- Puma application server
+- Minitest test framework
 
-* Database initialization
+## Domain Model
 
-* How to run the test suite
+- `User`
+  - has many `posts`
+  - has many `comments`
+  - validations: name presence, email presence/uniqueness/format
+- `Post`
+  - belongs to `user`
+  - has many `comments`
+  - validations: title presence, content presence and length
+- `Comment`
+  - belongs to `user`
+  - belongs to `post`
+  - validation: comment presence
 
-* Services (job queues, cache servers, search engines, etc.)
+## API Endpoints (v1)
 
-* Deployment instructions
+Base path: `/api/v1`
 
-* ...
+### Users
+
+- `GET /users`
+- `GET /users/:id`
+- `POST /users`
+- `PATCH /users/:id`
+- `DELETE /users/:id`
+
+### Posts
+
+- `GET /posts`
+- `GET /posts/:id`
+- `POST /posts`
+- `PATCH /posts/:id`
+- `DELETE /posts/:id`
+
+### Comments
+
+- `GET /comments`
+- `GET /comments/:id`
+- `POST /comments`
+- `PATCH /comments/:id`
+- `DELETE /comments/:id`
+
+## Getting Started
+
+### Prerequisites
+
+- Ruby (compatible with Rails `8.1.3`)
+- Bundler
+- SQLite3
+
+### Setup
+
+```bash
+bundle install
+bin/rails db:create
+bin/rails db:migrate
+```
+
+### Run the Server
+
+```bash
+bin/rails server
+```
+
+The API will be available at `http://localhost:3000`.
+
+## Run Tests
+
+```bash
+bin/rails test
+```
+
+## Notes
+
+- API responses are JSON by default under the `api` namespace.
+
